@@ -10,7 +10,7 @@ import json
 import re
 import pandas as pd
 from tqdm import tqdm
-
+#cctv 위치(위도,경도) 가져오기 --용인교통첨단센터
 name=[]
 x_pos=[]
 y_pos=[]
@@ -47,6 +47,7 @@ total.to_csv('용인시 cctv위치정보.csv',encoding='utf-8')
 
 ```
 ```c
+시각화
 import folium
 map_osm = folium.Map(location=[y_pos[0],x_pos[0]],zoom_start=13)
 for i in tqdm(range(len(y_pos))):
