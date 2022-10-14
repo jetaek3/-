@@ -1,9 +1,65 @@
-#시각화 코드 정리
+# 시각화 코드 정리
 
 ---
 
+
+
+
+
+
+# 전기차 충전소 시각화 
 ```c
-#cctv시각화
+from cmath import nan
+import pandas as pd
+import json
+from folium.plugins import FastMarkerCluster
+import folium
+
+df.read_csv('./echarge_yongin_naver_xy.csv',encoding='utf-8-sig')
+
+temp = df.dropna(subset=['위도'])
+yon_lat, yon_lng = 37.2410864, 127.1775537
+my_map = folium.Map(location=[yon_lat, yon_lng], zoom_start=5)
+
+for i,row in temp.iterrows():
+    folium.Circle(
+            location = (row['위도'], row['경도']),
+            # tooltip = df.loc[i, '고유번호'],
+            radius = 50
+        ).add_to(my_map)
+# save the map 
+my_map.save("save_file2.html")
+```
+
+# 인구 수 시각화
+```c
+state_geo='용인시_읍면동_EPSG4326.geojson'
+geo_data=json.load(open(state_geo,encoding='utf-8'))
+yongin_car = pd.read_csv('용인시 전기차_인구수_현황_코드.csv')
+
+
+#지도에 색 적용 및 데이터 연결
+m = folium.Map(location = [37.2411,127.1776], zoom_start = 13)
+folium.Choropleth(
+    geo_data = geo_data,
+    data = df,
+    columns = ('코드', '인구수'),
+    key_on='properties.adm_cd',
+    fill_color = 'RdYlGn',
+    fill_opacity = 0.7,
+    line_opacity = 0.5).add_to(m)
+
+m.save('yongin_population.html')
+m
+```
+
+
+
+
+
+
+# cctv시각화
+```c
 import requests
 from bs4 import BeautifulSoup
 import json 
@@ -47,7 +103,7 @@ total.to_csv('용인시 cctv위치정보.csv',encoding='utf-8')
 
 ```
 ```c
-시각화
+#시각화
 import folium
 map_osm = folium.Map(location=[y_pos[0],x_pos[0]],zoom_start=13)
 for i in tqdm(range(len(y_pos))):
@@ -57,7 +113,7 @@ map_osm
 ```
 
 ---
-# 전기차 충전소 위치
+
 
 
 
@@ -67,4 +123,4 @@ map_osm
 
 
 ---
-#공영주차장
+# 공영주차장
