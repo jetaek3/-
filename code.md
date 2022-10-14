@@ -53,8 +53,27 @@ m.save('yongin_population.html')
 m
 ```
 
+# 전기차 등록대수 시각화
+```c
+m = folium.Map(location = [37.2411,127.1776], zoom_start = 13)
+
+yongin_car = pd.read_csv('용인시 전기차_인구수_현황_코드.csv')
+yongin_car
 
 
+#지도에 색 적용 및 데이터 연결
+folium.Choropleth(
+    geo_data = geo_data,
+    data = df,
+    columns = ('코드', '등록 수'),
+    key_on='properties.adm_cd',
+    fill_color = 'RdYlGn',
+    fill_opacity = 0.7,
+    line_opacity = 0.5).add_to(m)
+
+m.save('yongin_population.html')
+m
+```
 
 
 
